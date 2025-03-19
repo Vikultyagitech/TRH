@@ -412,6 +412,8 @@ class _SplashScreenState extends State<SplashScreen>
   late Animation<double> _scaleAnimation;
   late Animation<Color?> _backgroundColorAnimation;
 
+
+
   @override
   void initState() {
     super.initState();
@@ -561,3 +563,5 @@ class _SplashScreenState extends State<SplashScreen>
     );
   }
 }
+
+

@@ -1463,6 +1463,7 @@ import 'package:flutter_application_3/otp_screen.dart';
 
 //========================
 
+
 import 'dart:math';
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -1531,7 +1532,7 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
 
       Future.delayed(const Duration(seconds: 3), () {
         setState(() {
-          _isFloatingAnimationActive = true;
+          _isFloatingAnimationActive = true; 
         });
         _floatingController.repeat(reverse: true);
       });
@@ -1631,10 +1632,10 @@ class _LoginScreenState extends State<LoginScreen> with TickerProviderStateMixin
                   child: Container(
                     height: 250,
                     width: 250,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.white,
-                      image: const DecorationImage(
+                      image: DecorationImage(
                         image: AssetImage('assets/images/test.jpg'),
                         fit: BoxFit.cover,
                       ),

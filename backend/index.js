@@ -39,7 +39,7 @@ connectDb()
 let otpSchema=new mongoose.Schema({
   phone: String,
   otp: String,
-  createdAt: { type: Date, default: Date.now(), expires: 30 }, // OTP expires in 5 mins
+  createdAt: { type: Date, default: Date.now(), expires: 30 }, 
 });
 
 const OTP = mongoose.model("OTP", otpSchema);
@@ -137,6 +137,71 @@ app.post("/resend-otp", async (req, res) => {
     res.status(500).json({ message: "Error sending OTP", error: error.message });
   }
 });
+
+
+
+// register form
+
+mongoose
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.log(err));
+
+// User Schema
+const UserSchema = new mongoose.Schema({
+  name: String,
+  gender: String,
+  age: Number,
+  height: Number,
+  weight: Number,
+  alterPhoneNumber:{
+    type:Number,
+    unique:true,
+  },
+
+  },{timestamps:true});
+
+
+const User = mongoose.model("User", UserSchema);
+
+
+
+// //
+app.post("/register", async (req, res) => {
+  try {
+    const { name, gender, age, height, weight, alterPhoneNumber } = req.body;
+
+    const user = new User({
+      name,
+      gender,
+      age,
+      height,
+      weight,
+      alterPhoneNumber: alterPhoneNumber || null, // Ensure null if empty
+    });
+
+    await user.save();
+    res.status(201).json({ message: "User registered successfully", user });
+
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+
+
+// Registration API
+app.post("/register", async (req, res) => {
+  try {
+    const newUser = new User(req.body);
+    await newUser.save();
+    res.status(201).json({ message: "User registered successfully!" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 
 
